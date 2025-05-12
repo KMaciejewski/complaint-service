@@ -28,6 +28,7 @@ docker-compose stop
 ```
 
 ### Tools
-| Tool             | URL                      | Login Credentials (if required)                   | Description |
-|------------------|--------------------------|---------------------------------------------------|-------------|
-| Adminer (MySQL)  | http://localhost:8088    | Server : `mysql`, User: `root`, Password: `mysql`   | UI to manage MySQL |
+| Tool            | URL                      | Login Credentials (if required)                   | Description |
+|-----------------|--------------------------|---------------------------------------------------|-------------|
+| Adminer (MySQL) | http://localhost:8088    | Server : `mysql`, User: `root`, Password: `mysql` | UI to manage MySQL |
+| OpenAPI  | http://localhost:8080/swagger-ui/index.html    | -                                                 | OpenAPI definition |

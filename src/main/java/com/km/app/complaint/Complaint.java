@@ -7,25 +7,32 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
-import lombok.Value;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
-@Value
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"productId", "reporter"}))
+@Table(name = "complaints", uniqueConstraints = @UniqueConstraint(columnNames = {"productId", "reporter"}))
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 class Complaint {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
 
-    String productId;
+    private String productId;
 
     @Column(length = 1000)
-    String content;
-    LocalDateTime createdAt;
-    String reporter;
-    String country;
-    int reportCount;
+    private String content;
+
+    private LocalDateTime createdAt;
+    private String reporter;
+    private String country;
+    private int reportCount;
 }
