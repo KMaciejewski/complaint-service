@@ -1,0 +1,28 @@
+spring:
+  application:
+    name: complaint-service
+#  profiles:
+#    active: ${PROFILE:dev}
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/complaint_service
+    username: root
+    password: mysql
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+springdoc:
+  api-docs:
+    path: /api-docs
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  health:
+    show-details: always
