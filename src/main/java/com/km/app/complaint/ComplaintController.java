@@ -28,11 +28,11 @@ class ComplaintController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     void addComplaint(@RequestBody @Valid ComplaintRequest complaintRequest, HttpServletRequest httpServletRequest) {
-        String ip = httpServletRequest.getRemoteAddr();
-        complaintService.addComplaint(complaintRequest, ip);
+        String ipAddress = httpServletRequest.getRemoteAddr();
+        complaintService.addComplaint(complaintRequest, ipAddress);
     }
 
-    @PatchMapping("/{id}/content")
+    @PatchMapping("{id}/content")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     void updateContent(@PathVariable Long id, String newContent) {
         complaintService.updateContent(id, newContent);
@@ -40,7 +40,7 @@ class ComplaintController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<ComplaintResponse> getAll(
+    List<ComplaintResponse> getAll(
             @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "20") int size) {
         return complaintService.getAll(page, size);

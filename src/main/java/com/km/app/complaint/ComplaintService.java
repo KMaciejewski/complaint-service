@@ -2,6 +2,7 @@ package com.km.app.complaint;
 
 import com.km.app.complaint.dto.ComplaintRequest;
 import com.km.app.complaint.dto.ComplaintResponse;
+import com.km.app.location.LocationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -17,9 +18,10 @@ import java.util.Optional;
 class ComplaintService {
 
     private final ComplaintRepository complaintRepository;
+    private final LocationService locationService;
 
     @Transactional
-    void addComplaint(ComplaintRequest request, String ip) {
+    void addComplaint(ComplaintRequest request, String ipAddress) {
         Optional<Long> idOptional = complaintRepository.findIdByProductIdAndReporter(
                 request.productId(),
                 request.reporter()
@@ -29,7 +31,7 @@ class ComplaintService {
             long id = idOptional.get();
             complaintRepository.incrementReportCount(id);
         } else {
-            String country = ""; // TODO get country from ip
+            String country = locationService.getCountryName(ipAddress);
             Complaint complaint = Complaint.builder()
                     .productId(request.productId())
                     .content(request.content())
