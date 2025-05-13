@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -17,15 +18,16 @@ class ComplaintService {
 
     private final ComplaintRepository complaintRepository;
 
-    void addOrUpdate(ComplaintRequest request, String ip) {
-        Optional<Complaint> complaintOptional = complaintRepository.findByProductIdAndReporter(
+    @Transactional
+    void addComplaint(ComplaintRequest request, String ip) {
+        Optional<Long> idOptional = complaintRepository.findIdByProductIdAndReporter(
                 request.productId(),
                 request.reporter()
         );
 
-        if (complaintOptional.isPresent()) {
-            Complaint complaint = complaintOptional.get();
-            complaint.setReportCount(complaint.getReportCount() + 1);
+        if (idOptional.isPresent()) {
+            long id = idOptional.get();
+            complaintRepository.incrementReportCount(id);
         } else {
             String country = ""; // TODO get country from ip
             Complaint complaint = Complaint.builder()
@@ -45,7 +47,7 @@ class ComplaintService {
         return complaintRepository.findAll(pageRequest)
                 .stream()
                 .map(complaint -> new ComplaintResponse(
-                        complaint.getId().toString(),
+                        complaint.getId(),
                         complaint.getProductId(),
                         complaint.getContent(),
                         complaint.getCreatedAt(),
@@ -55,9 +57,12 @@ class ComplaintService {
                 )).toList();
     }
 
-    public void updateContent(Long id, String content) {
-        Complaint complaint = complaintRepository.findById(id).orElseThrow(() -> new ComplaintNotFoundException(id));
-        complaint.setContent(content);
-        complaintRepository.save(complaint); // TODO Maybe patch instead of PUT
+    @Transactional
+    void updateContent(Long id, String newContent) {
+        int updated = complaintRepository.updateContent(id, newContent);
+        if (updated == 0) {
+            // TODO add proper exception handling
+            throw new ComplaintNotFoundException(id);
+        }
     }
 }

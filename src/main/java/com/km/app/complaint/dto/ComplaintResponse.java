@@ -3,7 +3,7 @@ package com.km.app.complaint.dto;
 import java.time.LocalDateTime;
 
 public record ComplaintResponse(
-        String id,
+        long id,
         String productId,
         String content,
         LocalDateTime createdAt,

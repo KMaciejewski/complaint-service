@@ -1,8 +1,10 @@
 package com.km.app.complaint;
 
-class ComplaintNotFoundException extends RuntimeException {
+import jakarta.persistence.EntityNotFoundException;
+
+class ComplaintNotFoundException extends EntityNotFoundException {
 
     ComplaintNotFoundException(Long id) {
-        super("Complaint with id " + id + " not found.");
+        super(String.format("Complaint with id %s not found.", id));
     }
 }

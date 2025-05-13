@@ -7,9 +7,9 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,13 +29,13 @@ class ComplaintController {
     @ResponseStatus(HttpStatus.CREATED)
     void addComplaint(@RequestBody @Valid ComplaintRequest complaintRequest, HttpServletRequest httpServletRequest) {
         String ip = httpServletRequest.getRemoteAddr();
-        complaintService.addOrUpdate(complaintRequest, ip);
+        complaintService.addComplaint(complaintRequest, ip);
     }
 
-    @PutMapping("{id}")
-    @ResponseStatus(HttpStatus.OK)
-    void updateContent(@PathVariable Long id, String content) {
-        complaintService.updateContent(id, content);
+    @PatchMapping("/{id}/content")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    void updateContent(@PathVariable Long id, String newContent) {
+        complaintService.updateContent(id, newContent);
     }
 
     @GetMapping
