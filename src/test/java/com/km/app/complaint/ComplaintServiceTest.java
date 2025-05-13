@@ -2,6 +2,7 @@ package com.km.app.complaint;
 
 import com.km.app.complaint.dto.ComplaintRequest;
 import com.km.app.complaint.dto.ComplaintResponse;
+import com.km.app.exception.ComplaintNotFoundException;
 import com.km.app.location.LocationService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

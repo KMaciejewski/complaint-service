@@ -2,6 +2,7 @@ package com.km.app.complaint;
 
 import com.km.app.complaint.dto.ComplaintRequest;
 import com.km.app.complaint.dto.ComplaintResponse;
+import com.km.app.exception.ComplaintNotFoundException;
 import com.km.app.location.LocationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
@@ -48,22 +49,14 @@ class ComplaintService {
         PageRequest pageRequest = PageRequest.of(page - 1, size, Sort.by("id").ascending());
         return complaintRepository.findAll(pageRequest)
                 .stream()
-                .map(complaint -> new ComplaintResponse(
-                        complaint.getId(),
-                        complaint.getProductId(),
-                        complaint.getContent(),
-                        complaint.getCreatedAt(),
-                        complaint.getReporter(),
-                        complaint.getCountry(),
-                        complaint.getReportCount()
-                )).toList();
+                .map(ComplaintMapper::toDto)
+                .toList();
     }
 
     @Transactional
     void updateContent(long id, String newContent) {
         int updated = complaintRepository.updateContent(id, newContent);
         if (updated == 0) {
-            // TODO add proper exception handling
             throw new ComplaintNotFoundException(id);
         }
     }
