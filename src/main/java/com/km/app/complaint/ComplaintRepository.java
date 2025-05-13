@@ -20,5 +20,5 @@ interface ComplaintRepository extends JpaRepository<Complaint, Long> {
 
     @Modifying
     @Query("UPDATE Complaint c SET c.content = :content WHERE c.id = :id")
-    int updateContent(@Param("id") Long id, @Param("content") String content);
+    int updateContent(@Param("id") long id, @Param("content") String content);
 }

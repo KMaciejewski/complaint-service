@@ -60,7 +60,7 @@ class ComplaintService {
     }
 
     @Transactional
-    void updateContent(Long id, String newContent) {
+    void updateContent(long id, String newContent) {
         int updated = complaintRepository.updateContent(id, newContent);
         if (updated == 0) {
             // TODO add proper exception handling

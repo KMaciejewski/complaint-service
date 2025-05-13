@@ -34,7 +34,7 @@ class ComplaintController {
 
     @PatchMapping("{id}/content")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    void updateContent(@PathVariable Long id, String newContent) {
+    void updateContent(@PathVariable long id, String newContent) {
         complaintService.updateContent(id, newContent);
     }
 
