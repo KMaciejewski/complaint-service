@@ -1,11 +1,14 @@
 package com.km.app.complaint;
 
+import com.km.app.complaint.dto.ComplaintPageResponse;
 import com.km.app.complaint.dto.ComplaintRequest;
 import com.km.app.complaint.dto.ComplaintResponse;
 import com.km.app.exception.ComplaintNotFoundException;
 import com.km.app.location.LocationService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -45,12 +48,10 @@ class ComplaintService {
         }
     }
 
-    List<ComplaintResponse> getAll(int page, int size) {
-        PageRequest pageRequest = PageRequest.of(page - 1, size, Sort.by("id").ascending());
-        return complaintRepository.findAll(pageRequest)
-                .stream()
-                .map(ComplaintMapper::toDto)
-                .toList();
+    ComplaintPageResponse getAll(int page, int size) {
+        Pageable pageable = PageRequest.of(page - 1, size, Sort.by("id").ascending());
+        Page<Complaint> complaintPage = complaintRepository.findAll(pageable);
+        return ComplaintMapper.toPageResponse(complaintPage);
     }
 
     @Transactional

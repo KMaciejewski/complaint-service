@@ -1,5 +1,6 @@
 package com.km.app.complaint;
 
+import com.km.app.complaint.dto.ComplaintPageResponse;
 import com.km.app.complaint.dto.ComplaintRequest;
 import com.km.app.complaint.dto.ComplaintResponse;
 import com.km.app.exception.ComplaintNotFoundException;
@@ -13,6 +14,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
 import java.time.LocalDateTime;
@@ -102,7 +104,7 @@ class ComplaintServiceTest {
     @Test
     void shouldReturnAllComplaints() {
         // given
-        int pageSize = 2;
+        int pageSize = 10;
         Complaint complaint = Complaint.builder()
                 .id(COMPLAINT_ID)
                 .productId(PRODUCT_ID)
@@ -112,17 +114,17 @@ class ComplaintServiceTest {
                 .country(COUNTRY)
                 .reportCount(1)
                 .build();
-        PageRequest pageRequest = PageRequest.of(0, pageSize, Sort.by("id").ascending());
+        Pageable pageable = PageRequest.of(0, pageSize, Sort.by("id").ascending());
         Page<Complaint> page = new PageImpl<>(List.of(complaint));
 
-        when(complaintRepository.findAll(pageRequest)).thenReturn(page);
+        when(complaintRepository.findAll(pageable)).thenReturn(page);
 
         // when
-        List<ComplaintResponse> responses = complaintService.getAll(1, pageSize);
+        ComplaintPageResponse pageResponse = complaintService.getAll(1, pageSize);
 
         // then
-        assertEquals(1, responses.size());
-        ComplaintResponse response = responses.getFirst();
+        assertEquals(1, pageResponse.complaints().size());
+        ComplaintResponse response = pageResponse.complaints().getFirst();
         assertEquals(complaint.getId(), response.id());
         assertEquals(complaint.getProductId(), response.productId());
         assertEquals(complaint.getContent(), response.content());
