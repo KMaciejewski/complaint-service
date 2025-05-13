@@ -2,7 +2,6 @@ package com.km.app.complaint;
 
 import com.km.app.complaint.dto.ComplaintPageResponse;
 import com.km.app.complaint.dto.ComplaintRequest;
-import com.km.app.complaint.dto.ComplaintResponse;
 import com.km.app.exception.ComplaintNotFoundException;
 import com.km.app.location.LocationService;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Optional;
 
 @Service
