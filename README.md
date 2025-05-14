@@ -8,9 +8,11 @@ Before running the project, ensure you have the following installed:
 
 
 ### Running the project
-To start the project, execute the following command in the root directory:
+To start the project, execute the following commands in the root directory:
 
 ```sh
+mvn clean install
+
 docker compose up --build -d
 ```
 
@@ -31,4 +33,4 @@ docker-compose stop
 | Tool            | URL                      | Login Credentials (if required)                   | Description |
 |-----------------|--------------------------|---------------------------------------------------|-------------|
 | Adminer (MySQL) | http://localhost:8088    | Server : `mysql`, User: `root`, Password: `mysql` | UI to manage MySQL |
-| OpenAPI  | http://localhost:8080/swagger-ui/index.html    | -                                                 | OpenAPI definition |
+| OpenAPI         | http://localhost:8080    | -                                                 | OpenAPI definition |
