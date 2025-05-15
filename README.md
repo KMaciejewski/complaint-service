@@ -36,3 +36,20 @@ docker-compose stop
 | OpenAPI         | http://localhost:8080    | -                                                 | OpenAPI definition                  |
 | Grafana         | http://localhost:3000    | User: `admin`, Password: `admin`                  | Logs & metrics dashboard            |
 | Prometheus      | http://localhost:9090    | -                                                 | App metrics (CPU, memory, requests) |
+
+
+## Observability
+### Logging
+- **Loki** aggregates logs for entire service.
+- Logs can be queried using **Grafana** to monitor application behavior.
+
+![Grafana Loki logs](src/main/resources/static/Loki_logs.png)
+
+### Metrics & Monitoring
+- **Prometheus** (`http://localhost:9090`) collects service metrics.
+
+![Prometheus metrics](src/main/resources/static/Prometheus_metrics.png)
+
+- **Grafana** (`http://localhost:3000`) visualizes metrics with customizable dashboards.
+
+- ![Grafana dashboard](src/main/resources/static/Grafana_dashboard.png)
