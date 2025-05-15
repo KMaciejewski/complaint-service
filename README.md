@@ -40,8 +40,8 @@ docker-compose stop
 
 ## Observability
 ### Logging
-- **Loki** aggregates logs for entire service.
-- Logs can be queried using **Grafana** to monitor application behavior.
+- **Loki** aggregates logs for the service.
+Logs can be queried using **Grafana** to monitor application behavior.
 
 ![Grafana Loki logs](src/main/resources/static/Loki_logs.png)
 
@@ -52,4 +52,4 @@ docker-compose stop
 
 - **Grafana** (`http://localhost:3000`) visualizes metrics with customizable dashboards.
 
-- ![Grafana dashboard](src/main/resources/static/Grafana_dashboard.png)
+![Grafana dashboard](src/main/resources/static/Grafana_dashboard.png)
