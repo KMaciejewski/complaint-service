@@ -18,6 +18,7 @@ springdoc:
     path: /
     url: /api-docs.yml
 
+# Observability & Actuator
 management:
   endpoints:
     web:
@@ -25,3 +26,19 @@ management:
         include: "*"
   health:
     show-details: always
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+    distribution:
+      percentiles-histogram:
+        http:
+          server:
+            requests: true
+  observations:
+    key-values:
+      application: ${spring.application.name}
+
+# Loki
+loki:
+  url: http://localhost:3100/loki/api/v1/push

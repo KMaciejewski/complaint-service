@@ -5,6 +5,7 @@ import com.km.app.complaint.dto.ComplaintRequest;
 import com.km.app.exception.ComplaintNotFoundException;
 import com.km.app.location.LocationService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -15,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 class ComplaintService {
@@ -56,6 +58,7 @@ class ComplaintService {
     void updateContent(long id, String newContent) {
         int updated = complaintRepository.updateContent(id, newContent);
         if (updated == 0) {
+            log.warn("Complaint with id {} not found", id);
             throw new ComplaintNotFoundException(id);
         }
     }

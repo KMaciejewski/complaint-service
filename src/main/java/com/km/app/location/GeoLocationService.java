@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Objects;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -17,11 +19,15 @@ class GeoLocationService implements LocationService {
     public String getCountryName(String ipAddress) {
         try {
             String url = "https://ipapi.co/" + ipAddress + "/country_name/";
-            return restTemplate.getForObject(url, String.class);
+            String countryName = restTemplate.getForObject(url, String.class);
+            if (Objects.equals(countryName, "Undefined")) {
+                log.warn("[GeoLocationService] No country name found for IP address: {}", ipAddress);
+                return "Unknown";
+            }
+            return countryName;
         } catch (RestClientException e) {
-            // TODO handle exception
-            log.error("Error fetching country name for IP address {}: {}", ipAddress, e.getMessage());
-            return "Unknown";
+            log.error("[GeoLocationService] Error fetching country name for IP address {}: {}", ipAddress, e.getMessage());
+            throw e;
         }
     }
 }

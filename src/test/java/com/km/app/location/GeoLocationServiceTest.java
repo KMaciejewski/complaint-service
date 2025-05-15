@@ -9,6 +9,7 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
@@ -49,9 +50,25 @@ class GeoLocationServiceTest {
     }
 
     @Test
-    void shouldReturnUnknownWhenApiThrowsException() {
+    void shouldRethrowRestClientException() {
         // given
         when(restTemplate.getForObject(anyString(), any())).thenThrow(new RestClientException("API error"));
+
+        // when
+        RestClientException exception = assertThrows(
+                RestClientException.class,
+                () -> geoLocationService.getCountryName(IP_ADDRESS)
+        );
+
+        // then
+        assertEquals("API error", exception.getMessage());
+
+    }
+
+    @Test
+    void shouldReturnUnknownWhenApiReturnsUndefined() {
+        // given
+        when(restTemplate.getForObject(anyString(), any())).thenReturn("Undefined");
 
         // when
         String actualCountry = geoLocationService.getCountryName(IP_ADDRESS);

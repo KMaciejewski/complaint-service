@@ -30,7 +30,9 @@ docker-compose stop
 ```
 
 ### Tools
-| Tool            | URL                      | Login Credentials (if required)                   | Description |
-|-----------------|--------------------------|---------------------------------------------------|-------------|
-| Adminer (MySQL) | http://localhost:8088    | Server : `mysql`, User: `root`, Password: `mysql` | UI to manage MySQL |
-| OpenAPI         | http://localhost:8080    | -                                                 | OpenAPI definition |
+| Tool            | URL                      | Login Credentials (if required)                   | Description                         |
+|-----------------|--------------------------|---------------------------------------------------|-------------------------------------|
+| Adminer (MySQL) | http://localhost:8088    | Server : `mysql`, User: `root`, Password: `mysql` | UI to manage MySQL                  |
+| OpenAPI         | http://localhost:8080    | -                                                 | OpenAPI definition                  |
+| Grafana         | http://localhost:3000    | User: `admin`, Password: `admin`                  | Logs & metrics dashboard            |
+| Prometheus      | http://localhost:9090    | -                                                 | App metrics (CPU, memory, requests) |
